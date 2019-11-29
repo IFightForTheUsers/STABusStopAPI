@@ -13,5 +13,8 @@ http://52.88.188.196:8080/api/api/where/stops-for-route/STA_66.json?key=TEST
 // list of all the stops for this route
 
 // to get detailed information for each stop:
-http://52.88.188.196:8080/api/api/where/stop/[stop_id].json?key=TEST
+http://52.88.188.196:8080/api/api/where/stop/[stopID].json?key=TEST
+
+// to get arrival/departure schedule for designated stop:
+http://52.88.188.196:8080/api/api/where/schedule-for-stop/[stopID].json?key=TEST
 

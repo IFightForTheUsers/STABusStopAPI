@@ -1,0 +1,19 @@
+#agency, #route {
+    font-weight: bold;
+}
+
+#currentTime, #stopInfo, #tripInfo {
+    display: none;
+}
+
+#currentTime {
+    color: red;
+}
+
+#stopInfo {
+    color: purple;
+}
+
+#tripInfo {
+    color: blue;
+}

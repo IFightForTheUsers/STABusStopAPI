@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Bus Stop Departures/Arrivals</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="functionality2.js" async defer></script>
+        <link rel="stylesheet" href="styling.css">
+    </head>
+
+    <body>
+        
+        <h>Stop ID:</h>
+        <input type="text" style="padding: 2px" id="stopInput" value="STA_ELMPUBWF">
+        <button id="GetStopScheduleButton">Get Schedule</button>
+
+        <div id="currentTime">
+            <br>
+            <h style="font-weight: bold">Current Time: </h>
+            <h id="time"></h>
+            <br>
+        </div>
+
+        <div id="stopInfo">
+            <br>
+
+            <h style="font-weight: bold">Schedule for stop: </h>
+            <h id="stopName"></h><br>
+            <br>
+
+            <h style="font-weight: bold">Routes that service this stop:</h><br>
+        </div>
+
+        <div id="tripInfo">
+
+            <p style="font-weight: bold">Upcoming Trips:</p>
+
+            <!-- 
+            <table style="width: 80%">
+                <tr>
+                    <th style="width: 50%">Departures</th>
+                    <th style="width: 50%">Arrivals</th>
+                </tr>
+            </table> 
+            -->
+
+        </div>
+
+    </body>
+</html>

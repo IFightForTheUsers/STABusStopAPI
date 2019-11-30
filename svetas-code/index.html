@@ -1,0 +1,59 @@
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="sta.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <title>STA Project</title>
+</head>
+
+
+
+<body>
+    <div class="container">
+        <div class="header" id="form_header">
+            <span id="header_text">STA Project</span>
+        </div>
+
+        <div class="form_error" id="form_error">
+
+        </div>
+
+        <div class="content">
+            <table>
+                <tr>
+                    <td>
+                        Routes:
+                    </td>
+                    <td>
+                        <select id="select_routes" class="selects" onchange="onRouteChanged()">
+
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Stops:
+                    </td>
+                    <td>
+                        <select id="select_stops" class="selects" onchange="onStopChanged()">
+
+                        </select>
+
+                    </td>
+            </table>
+
+            <table >
+                <tr>
+                    <td id="dir1"></td>
+                    <td id="dir2"></td>
+                </tr>
+            </table>
+
+
+        </div>
+    </div>
+</body>
+
+</html>

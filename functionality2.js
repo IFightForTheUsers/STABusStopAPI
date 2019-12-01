@@ -167,3 +167,10 @@ function timeConverter(UNIX_timestamp){
 
     
 }
+
+$("#setNewColorScheme").click(setNewColors);
+
+function setNewColors() {
+    document.getElementById("stopInfo").style.background = document.getElementById("color1").value;
+    document.getElementById("tripInfo").style.background = document.getElementById("color2").value;
+}

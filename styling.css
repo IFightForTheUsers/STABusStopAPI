@@ -6,14 +6,11 @@
     display: none;
 }
 
-#currentTime {
-    color: red;
-}
 
 #stopInfo {
-    color: purple;
+    background-color: #B3D671;
 }
 
 #tripInfo {
-    color: blue;
+    background-color: #2CAAE1;
 }

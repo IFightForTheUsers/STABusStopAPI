@@ -1,5 +1,31 @@
+var arrivalTimes = []; // arrival times for the countdowns
+var setIntervalHandle = null;
 
-$("#GetStopScheduleButton").click(getSchedule);
+// save initialization upon the DOM loaded event.
+$(function() {
+    $("#GetStopScheduleButton").click(getSchedule);
+})
+
+function countDonwEvent() {
+    var cur = new Date();
+
+    for(i = 0; i < arrivalTimes.length; i++) {
+        var time = new Date(arrivalTimes[i].time);
+
+        var diff = parseInt((time.getTime() - cur.getTime()) / 1000);
+
+        if(diff > 0) {
+            if(i == 0) { // first one, show time left until arrival
+                $("#count-down-" + i).html(" in " + convertSecondsToTime(diff));
+            } else {
+                $("#count-down-" + i).html(" at " + arrivalTimes[i].fmtTime);
+            }
+        } else {
+            $("#count-down-" + i).html(" now...");
+        }
+    }
+}
+
 
 function getSchedule() {
 
@@ -13,6 +39,11 @@ function getSchedule() {
 function gotData(data) {
     console.log(data);
 
+    // Make sure to stop the interval coutdown mechanism
+    if(setIntervalHandle != null ) {
+        clearInterval(setIntervalHandle);
+    }
+
     $("#time").html(timeConverter(data.currentTime));
 
     $("#currentTime").show();
@@ -21,14 +52,25 @@ function gotData(data) {
 
     $("#stopName").html(data.data.references.stops[0].name);
 
+    // Reset to allow smooth recalclation.
+    arrivalTimes = [];
+
+    // Reset trips information.
+    $("#trips").html('');
+
     let routes = data.data.entry.stopRouteSchedules;
 
     for (var route of routes) {
         console.log(route);
 
-        let routeName = document.createElement("h");
-        routeName.innerHTML = route.routeId + " (" + route.stopRouteDirectionSchedules[0].tripHeadsign + ") <br>";
-        document.getElementById("stopInfo").appendChild(routeName);
+        // let routeName = document.createElement("h");
+        // routeName.innerHTML = route.routeId + " (" + route.stopRouteDirectionSchedules[0].tripHeadsign + ") <br>";
+        // document.getElementById("stopInfo").appendChild(routeName);
+
+        $("#route").html(route.routeId + " (" + route.stopRouteDirectionSchedules[0].tripHeadsign + ") <br>");
+
+        var count = 0;
+        var times = [];
 
         for (var trip of route.stopRouteDirectionSchedules[0].scheduleStopTimes) {
             
@@ -37,19 +79,30 @@ function gotData(data) {
                 let tripID = document.createElement("h");
                 tripID.innerHTML = "TripID: " + trip.tripId + "<br>";
                 let tripArrivalTime = document.createElement("h");
-                tripArrivalTime.innerHTML = route.routeId + " will be here at " + timeConverter(trip.arrivalTime) + "<br><br>";
+                tripArrivalTime.innerHTML = route.routeId + " will be here <span id='count-down-"+count+"'></span><br><br>";
                 // let tripDepartureTime = document.createElement("h"); 
                 // tripDepartureTime.innerHTML = "Departure Time: " + timeConverter(trip.departureTime) + "<br><br>";
-                document.getElementById("tripInfo").appendChild(tripID);
-                document.getElementById("tripInfo").appendChild(tripArrivalTime);
+                document.getElementById("trips").appendChild(tripID);
+                document.getElementById("trips").appendChild(tripArrivalTime);
                 //document.getElementById("tripInfo").appendChild(tripDepartureTime);
+
+                times.push({ time: trip.arrivalTime, fmtTime: timeConverter(trip.arrivalTime) });
+                count++;
             }
             
         }
 
+        // Update times
+        arrivalTimes = times;
+
+        countDonwEvent(); // update immediatelly
+
+        // Start interval coutdown
+        setIntervalHandle = setInterval(countDonwEvent, 1000); // every seconds
+
         let dashedLine = document.createElement("h");
         dashedLine.innerHTML = "---------------------------------- <br><br>";
-        document.getElementById("tripInfo").appendChild(dashedLine);
+        document.getElementById("trips").appendChild(dashedLine);
 
     }
     
@@ -57,6 +110,17 @@ function gotData(data) {
     $("#tripInfo").show();
 
 
+}
+
+function convertSecondsToTime(seconds) {
+
+    var hours   = Math.floor(seconds / 3600);
+    var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+    var seconds = seconds - (hours * 3600) - (minutes * 60);
+    
+    return hours.toString().padStart(2, '0') + ':' + 
+          minutes.toString().padStart(2, '0') + ':' + 
+          seconds.toString().padStart(2, '0');
 }
 
 // this function converts millisecond time into human-readable format

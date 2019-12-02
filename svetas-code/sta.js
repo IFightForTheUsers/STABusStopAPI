@@ -197,6 +197,7 @@ function updateBoardHeader() {
  * Function that runs upon the DOM ready event.
  */
 $(function(){
+  //takes reference to 'select_routes' element and saves to select_routes
   select_routes = document.getElementById('select_routes');
   select_stops  = document.getElementById('select_stops');
 

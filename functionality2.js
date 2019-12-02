@@ -1,40 +1,208 @@
+var BoardTime = new Date();
+var BusRoute = "Calculating...";
+var BusStopName = "";
+
+// References to the selects for the routes and stops.
+var select_routes;
+var select_stops;
+
+var DefaultRoute = "STA_64";
+var DefaultStop = "STA_ELMPUBWF";
+var FirstTimeLoad = true;
+
 var arrivalTimes = []; // arrival times for the countdowns
 var setIntervalHandle = null;
+
+
+
+/**
+ * Reloads drop-down box (select)
+ * @param {*} select - select to reload
+ * @param {*} data   - array to be loaded in the following format: { text: '', value: '' }
+ */
+function fillSelect(select, data) {
+    select.options.length = 0;
+    data.forEach(e => {
+      var option   = document.createElement("option");
+      option.text  = e.text;
+      option.value = e.value;
+      select.add(option);
+    });
+  }
+
+
+function wrapURL(url) {
+    return "https://cors-anywhere.herokuapp.com/" + url;
+}
+
+/**
+ * Loads all STA routs from the service.
+ */
+function getRoutes() {
+
+    $.get(wrapURL("http://52.88.188.196:8080/api/api/where/routes-for-agency/STA.json?key=TEST"), 
+      function(response) {
+      console.log(response.data);
+      var data = [];
+  
+      // reformatting the data to be compatible with the fillSelect function
+      response.data.list.forEach(e => {
+        data.push({ text: 'Route ' + e.shortName, value: e.id  });
+      });
+  
+      // Sort the data to be in ascending order.
+      data.sort((a, b) => (a.value > b.value) ? 1 : -1);
+  
+      // Reload data
+      fillSelect(select_routes, data, 0);
+
+      if(FirstTimeLoad)
+      {
+          //FirstTimeLoad = false;
+          select_routes.value = DefaultRoute;
+      }
+
+      // grab stops for the selected routs
+      // getStops(select_routes.value);
+      onRouteChanged();
+    });
+  }
+
+
+/**
+ * Loads all the stops for the specified route.
+ * @param {*} routeId 
+ */
+function getStops(routeId) {
+    console.log("getStops: " + routeId);
+  
+    $.get(wrapURL("http://52.88.188.196:8080/api/api/where/stops-for-route/" + routeId + ".json?key=TEST"),
+    function(response) {
+      //console.log(response.data.references.stops);
+      var stops = response.data.references.stops;
+      /* we get data in the following format:
+      code: "1005"
+      direction: "E"
+      id: "STA_ARENA"
+      lat: 47.667999
+      locationType: 0
+      lon: -117.419131
+      name: "Arena Lot"
+      */
+  
+      var data = [];
+  
+      // Reformat data to be populated to the select.
+      stops.forEach(e => {
+        data.push({ text: e.name, value: e.id }); // e.code + ":" + e.direction + ":" + e.id  });
+      });
+  
+      fillSelect(select_stops, data, 0);
+  
+      if(FirstTimeLoad)
+      {
+          FirstTimeLoad = false;
+          select_stops.value = DefaultStop;
+      }
+
+      // Indicate that the stop has hchanged.
+      onStopChanged();
+  
+      // Reload the time schedule
+      //getArrivalDepartures(select_stops.value);
+    });
+  }
+
+/**
+ * Runs upon the route change.
+ */
+function onRouteChanged() {
+    console.log("onRouteChanged: " + select_routes.value);
+    BusRoute = select_routes.options[select_routes.selectedIndex].text;
+    getStops(select_routes.value);
+  }
+
+
+/**
+ * Runs upon the stop select change.
+ */
+function onStopChanged() {
+    var face = select_stops.options[select_stops.selectedIndex].text;
+    var value = select_stops.options[select_stops.selectedIndex].value;
+  
+    //getArrivalDepartures(value);
+    getSchedule(value);
+
+    BusStopName = face;
+  }
 
 // save initialization upon the DOM loaded event.
 $(function() {
     $("#GetStopScheduleButton").click(getSchedule);
+
+      //takes reference to 'select_routes' element and saves to select_routes
+  select_routes = document.getElementById('select_routes');
+  select_stops  = document.getElementById('select_stops');
+
+  getRoutes();
+
+  updateBoardHeader();
+
+  setInterval(updateBoardHeader, 1000);
+
 })
 
 function countDonwEvent() {
     var cur = new Date();
 
     for(i = 0; i < arrivalTimes.length; i++) {
+        var span = $("#count-down-" + i); // take reference
+
         var time = new Date(arrivalTimes[i].time);
 
         var diff = parseInt((time.getTime() - cur.getTime()) / 1000);
 
         if(diff > 0) {
             if(i == 0) { // first one, show time left until arrival
-                $("#count-down-" + i).html(" in " + convertSecondsToTime(diff));
+
+                if(diff < 120) { // two minutes
+                    span.addClass('highlight');
+                } else {
+                    span.removeClass('highlight');
+                }
+
+                span.html(" in " + convertSecondsToTime(diff));
             } else {
-                $("#count-down-" + i).html(" at " + arrivalTimes[i].fmtTime);
+                span.html(" at " + arrivalTimes[i].fmtTime);
             }
         } else {
-            $("#count-down-" + i).html(" now...");
+            span.html(" now...");
         }
     }
 }
 
 
-function getSchedule() {
+function getSchedule(stopID = null) {
 
-    stopID = $("#stopInput").val();
+    if(stopID == null)
+    {
+        stopID = $("#stopInput").val();
+    }
 
     url = "https://cors-anywhere.herokuapp.com/http://52.88.188.196:8080/api/api/where/schedule-for-stop/" + stopID + ".json?key=TEST"
    
     $.get(url, gotData);
 }
+
+
+/**
+ * Updates the board header information that conatins 
+ * the stop name and current time.
+ */
+function updateBoardHeader() {
+    $("#header_text").html(BusRoute + ", STOP: " + BusStopName + ' - ' + timeConverter(BoardTime));
+    BoardTime.setSeconds( BoardTime.getSeconds() + 1 );
+  }
 
 function gotData(data) {
     console.log(data);
@@ -43,6 +211,8 @@ function gotData(data) {
     if(setIntervalHandle != null ) {
         clearInterval(setIntervalHandle);
     }
+
+    BoardTime = new Date(data.currentTime);
 
     $("#time").html(timeConverter(data.currentTime));
 
@@ -173,4 +343,9 @@ $("#setNewColorScheme").click(setNewColors);
 function setNewColors() {
     document.getElementById("stopInfo").style.background = document.getElementById("color1").value;
     document.getElementById("tripInfo").style.background = document.getElementById("color2").value;
+}
+
+function toggleSettings()
+{
+    $("#settings").toggle();
 }

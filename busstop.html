@@ -1,60 +1,110 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Bus Stop Departures/Arrivals</title>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="functionality2.js" async defer></script>
-        <link rel="stylesheet" href="styling.css">
-    </head>
+<head>
+    <title>Bus Stop Departures/Arrivals</title>
 
-    <body>
-        
-        <h>Stop ID:</h>
-        <input type="text" style="padding: 2px" id="stopInput" value="STA_ELMPUBWF">
-        <button id="GetStopScheduleButton">Get Schedule</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="functionality3.js" async defer></script>
+    <link rel="stylesheet" href="styling.css">
+</head>
 
-        <h>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Change color scheme:</h>
-        <input type="text" id="color1" style="padding: 2px">
-        <input type="text" id="color2" style="padding: 2px">
-        <button id="setNewColorScheme">Set</button>
-
-        <div id="currentTime">
-            <br>
-            <b>Current Time: </b>
-            <h id="time"></h>
-            <br>
+<body>
+    <div class="container">
+        <div class="header" id="form_header">
+            <span id="header_text">STA Project</span>
         </div>
 
-        <div id="stopInfo">
-            <br>
+        <div class="form_error" id="form_error">
 
-            <b>Schedule for stop: </b>
-            <h id="stopName"></h><br>
-            <br>
-
-            <b>Routes that service this stop:</b><br>
-            <span id="routes">
-                
-            </span>
         </div>
 
-        <div id="tripInfo">
+        <div class="content">
+            <button onclick="toggleSettings()">Settings</button>
 
-            <p style="font-weight: bold">Upcoming Trips:</p>
 
-            <div id="trips"> </div>
+            <div id="settings" style="display: none;">
 
-            <!-- 
-            <table style="width: 80%">
+
+            <table>
+                <!-- <tr>
+                    <td>
+                        Routes:
+                    </td>
+                    <td>
+                        <select id="select_routes" class="selects" onchange="onRouteChanged()">
+
+                        </select>
+
+                    </td>
+                </tr> -->
                 <tr>
-                    <th style="width: 50%">Departures</th>
-                    <th style="width: 50%">Arrivals</th>
-                </tr>
-            </table> 
-            -->
+                    <td>
+                        Stop ID:
+                    </td>
+                    <td>
+                        <input type="text" id="stopInput" value="STA_ELMPUBWF">
+                        <button id="GetScheduleButton">Get Schedule</button>
+                    </td>
+            </table>
+
+
+
+            <!-- <h>Stop ID:</h>
+        <input type="text" style="padding: 2px" id="stopInput" value="STA_ELMPUBWF">
+        <button id="GetStopScheduleButton">Get Schedule</button> -->
+                <h>Change color scheme:</h>
+                <input type="text" id="color1" style="padding: 2px">
+                <input type="text" id="color2" style="padding: 2px">
+                <button id="setNewColorScheme">Set</button>
+            </div>
+            <!-- <div id="currentTime">
+                <br>
+                <b>Current Time: </b>
+                <h id="time"></h>
+                <br>
+            </div> -->
+
+            <div id="stopInfo">
+
+                <b>Schedule for stop: </b>
+                <h id="stopName"></h><br>
+                <br>
+
+                <b>Routes that service this stop:</b><br>
+                <span id="routes">
+
+                </span>
+            </div>
+
+            <div id="tripInfo">
+
+                <p style="font-weight: bold">Upcoming Trips:</p>
+
+                <div>
+                    <div id="arrivals">
+                        <h2>Arrivals</h2>
+                    </div> 
+    
+                    <div id="departures">
+                        <h2>Departures</h2>
+                    </div>
+                        
+                </div>
+
+
+                <div id="trips"> </div>
+
+
+
+            </div>
+
+
+
 
         </div>
+    </div>
 
-    </body>
+</body>
+
 </html>

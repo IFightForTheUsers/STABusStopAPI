@@ -10,6 +10,7 @@
 </head>
 
 <body>
+    <img class="image" src="https://cdn.masstransitmag.com/files/base/cygnus/mass/image/2014/03/960w/sta-logo_11324970.jpg">
     <div class="container">
         <div class="header" id="form_header">
             <span id="header_text">STA Project</span>
@@ -20,7 +21,7 @@
         </div>
 
         <div class="content">
-            <button onclick="toggleSettings()">Settings</button>
+            <button class="button" onclick="toggleSettings()">Change Routes</button>
 
 
             <div id="settings" style="display: none;">
@@ -56,16 +57,16 @@
         <input type="text" style="padding: 2px" id="stopInput" value="STA_ELMPUBWF">
         <button id="GetStopScheduleButton">Get Schedule</button> -->
                 <h>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Change color scheme:</h>
-                <input type="text" id="color1" style="padding: 2px">
+                <!--input type="text" id="color1" style="padding: 2px"-->
                 <input type="text" id="color2" style="padding: 2px">
-                <button id="setNewColorScheme">Set</button>
+                <button class="button" id="setNewColorScheme">Set</button>
             </div>
             <!-- <div id="currentTime">
                 <br>
                 <b>Current Time: </b>
                 <h id="time"></h>
                 <br>
-            </div> -->
+            </div> >
 
             <div id="stopInfo">
                 <br>
@@ -77,13 +78,13 @@
                 <b>Routes that service this stop:</b><br>
                 <span id="routes">
 
-                </span>
+                </span-->
             </div>
+            <div id="tripInfo" class="container2">
 
-            <div id="tripInfo">
-
-                <p style="font-weight: bold">Upcoming Trips:</p>
-
+                <div class="header" id="form_header">
+                    <span id="header_text">Upcoming Trips</span>
+                </div>
                 <div id="trips"> </div>
 
                 <!-- 
@@ -94,9 +95,14 @@
                 </tr>
             </table> 
             -->
+        </div>
 
             </div>
 
+
+            <p class="names"> By Svetlana Kozubenko & Steven Richmond </p>
+            <p class="names"> To Learn about Development Process: <a href="file:///C:/Users/sveta/Desktop/STAProject/STABusStopAPI/busstop.html">Click Here</a></p>
+            
 
 
 

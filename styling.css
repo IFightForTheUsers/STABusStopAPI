@@ -14,3 +14,83 @@
 #tripInfo {
     background-color: #2CAAE1;
 }
+
+#arrivals, #departures {
+  float: left;
+  width: 50%;
+} 
+
+.selects {
+    width:300px;
+  }
+
+.highlight {
+    background-color: yellowgreen;
+}
+
+.header {
+    font-size: 1.0em;
+    background: rgb(35, 231, 110);
+    padding:8px;
+    font-weight: bold;
+  }
+  
+  .content {
+    padding:8px;
+    padding-top:12px;
+  }
+  
+  .form_error {
+    display: none;
+    padding:8px;
+    background-color: rgb(252, 133, 133);
+    color: black;
+  }
+  
+  .pairs td {
+    padding:5px;
+  }
+  
+  .container {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgb(240, 202, 202);
+    min-height: 400px;
+    background-color: rgb(155, 210, 247);
+    margin: 12px;
+  
+    -webkit-box-shadow: 1px 1px 3px 4px rgb(231, 231, 231);  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    1px 1px 3px 4px rgb(231, 231, 231); ;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         1px 1px 3px 4px rgb(231, 231, 231); ;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  }
+
+  .container2 {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid rgb(240, 202, 202);
+    min-height: 400px;
+    background-color: rgb(143, 225, 245);
+    margin: 12px;
+  
+    -webkit-box-shadow: 1px 1px 3px 4px rgb(231, 231, 231);  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    1px 1px 3px 4px rgb(231, 231, 231); ;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         1px 1px 3px 4px rgb(231, 231, 231); ;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+  }
+
+  .button
+  {
+    border-radius: 4px;
+    background: turquoise;
+  }
+
+  .names
+  {
+    text-align: center;
+  }
+
+  .image
+  {
+      width: 400px;
+      height: 80px;
+      
+  }

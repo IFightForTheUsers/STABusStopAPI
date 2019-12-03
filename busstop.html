@@ -1,51 +1,105 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Bus Stop Departures/Arrivals</title>
 
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="functionality2.js" async defer></script>
-        <link rel="stylesheet" href="styling.css">
-    </head>
+<head>
+    <title>Bus Stop Departures/Arrivals</title>
 
-    <body>
-        
-        <h>Stop ID:</h>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="functionality2.js" async defer></script>
+    <link rel="stylesheet" href="styling.css">
+</head>
+
+<body>
+    <img class="image" src="https://cdn.masstransitmag.com/files/base/cygnus/mass/image/2014/03/960w/sta-logo_11324970.jpg">
+    <div class="container">
+        <div class="header" id="form_header">
+            <span id="header_text">STA Project</span>
+        </div>
+
+        <div class="form_error" id="form_error">
+
+        </div>
+
+        <div class="content">
+            <button class="button" onclick="toggleSettings()">Change Routes</button>
+
+
+            <div id="settings" style="display: none;">
+
+
+            <table>
+                <tr>
+                    <td>
+                        Routes:
+                    </td>
+                    <td>
+                        <select id="select_routes" class="selects" onchange="onRouteChanged()">
+
+                        </select>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Stops:
+                    </td>
+                    <td>
+                        <select id="select_stops" class="selects" onchange="onStopChanged()">
+
+                        </select>
+
+                    </td>
+            </table>
+
+
+
+            <!-- <h>Stop ID:</h>
         <input type="text" style="padding: 2px" id="stopInput" value="STA_ELMPUBWF">
-        <button id="GetStopScheduleButton">Get Schedule</button>
+        <button id="GetStopScheduleButton">Get Schedule</button> -->
+                <h>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Change color scheme:</h>
+                <!--input type="text" id="color1" style="padding: 2px"-->
+                <input type="text" id="color2" style="padding: 2px">
+                <button class="button" id="setNewColorScheme">Set</button>
+            </div>
+            <!-- <div id="currentTime">
+                <br>
+                <b>Current Time: </b>
+                <h id="time"></h>
+                <br>
+            </div> >
 
-        <h>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Change color scheme:</h>
-        <input type="text" id="color1" style="padding: 2px">
-        <input type="text" id="color2" style="padding: 2px">
-        <button id="setNewColorScheme">Set</button>
+            <div id="stopInfo">
+                <br>
 
-        <div id="currentTime">
-            <br>
-            <b>Current Time: </b>
-            <h id="time"></h>
-            <br>
-        </div>
+                <b>Schedule for stop: </b>
+                <h id="stopName"></h><br>
+                <br>
 
-        <div id="stopInfo">
-            <br>
+                <b>Routes that service this stop:</b><br>
+                <span id="routes">
 
-            <b>Schedule for stop: </b>
-            <h id="stopName"></h><br>
-            <br>
+                </span-->
+            </div>
+            <div id="tripInfo" class="container2">
 
-            <b>Routes that service this stop:</b><br>
-            <span id="routes">
-                
-            </span>
-        </div>
+                <div class="header" id="form_header">
+                    <span id="header_text">Upcoming Trips</span>
+                </div>
 
-        <div id="tripInfo">
+                <div>
+                    <div id="arrivals">
+                        <h2>Arrivals</h2>
+                    </div> 
+    
+                    <div id="departures">
+                        <h2>Departures</h2>
+                    </div>
+                        
+                </div>
 
-            <p style="font-weight: bold">Upcoming Trips:</p>
+                <div id="trips"> </div>
 
-            <div id="trips"> </div>
-
-            <!-- 
+                <!-- 
             <table style="width: 80%">
                 <tr>
                     <th style="width: 50%">Departures</th>
@@ -53,8 +107,20 @@
                 </tr>
             </table> 
             -->
-
         </div>
 
-    </body>
+            </div>
+
+
+            <p class="names"> By Svetlana Kozubenko & Steven Richmond </p>
+            <p class="names"> To Learn about Development Process: <a href="file:///C:/Users/sveta/Desktop/STAProject/STABusStopAPI/busstop.html">Click Here</a></p>
+            
+
+
+
+        </div>
+    </div>
+
+</body>
+
 </html>

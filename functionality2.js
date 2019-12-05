@@ -1,3 +1,9 @@
+/*
+Svetlana Kozubenko & Steven Richmond
+CSCD378 - Web Application Development
+Team Project - Bus Stop API
+*/
+
 var BoardTime = new Date();
 var BusRoute = "Calculating...";
 var BusStopName = "";
@@ -58,17 +64,17 @@ function getRoutes() {
 
       if(FirstTimeLoad)
       {
-          //FirstTimeLoad = false;
+          FirstTimeLoad = false;
           select_routes.value = DefaultRoute;
       }
 
       // grab stops for the selected routs
-      // getStops(select_routes.value);
+      getStops(select_routes.value);
+
       onRouteChanged();
 
     }, "jsonp");
   }
-
 
 /**
  * Loads all the stops for the specified route.
@@ -122,7 +128,6 @@ function onRouteChanged() {
     BusRoute = select_routes.options[select_routes.selectedIndex].text;
     getStops(select_routes.value);
   }
-
 
 /**
  * Runs upon the stop select change.
@@ -183,10 +188,7 @@ function countDonwEvent() {
             }
         }
     }
-
-    
 }
-
 
 function getSchedule(stopID = null) {
 
@@ -199,7 +201,6 @@ function getSchedule(stopID = null) {
    
     $.get(url, gotData, "jsonp");
 }
-
 
 /**
  * Updates the board header information that conatins 
@@ -260,8 +261,6 @@ function gotData(data) {
             var A_times = [];
             var D_times = [];
 
-            
-
             for (var trip of route.stopRouteDirectionSchedules[0].scheduleStopTimes) {
                 
                 if (trip.arrivalTime >= data.currentTime) {
@@ -287,8 +286,6 @@ function gotData(data) {
             }
         }
 
-        
-
         // Update times
         arrivalTimes = A_times;
         departureTimes = D_times;
@@ -297,14 +294,8 @@ function gotData(data) {
 
         // Start interval coutdown
         setIntervalHandle = setInterval(countDonwEvent, 1000); // every second
-
-
     }
-    
-    
     $("#tripInfo").show();
-
-
 }
 
 function convertSecondsToTime(seconds) {

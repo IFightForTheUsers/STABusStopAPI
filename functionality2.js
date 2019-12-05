@@ -21,8 +21,6 @@ var departureTimes = [];
 
 var setIntervalHandle = null;
 
-
-
 /**
  * Reloads drop-down box (select)
  * @param {*} select - select to reload
@@ -37,9 +35,6 @@ function fillSelect(select, data) {
       select.add(option);
     });
   }
-
-
-
 
 /**
  * Loads all STA routs from the service.
@@ -64,12 +59,12 @@ function getRoutes() {
 
       if(FirstTimeLoad)
       {
-          FirstTimeLoad = false;
+          //FirstTimeLoad = false;
           select_routes.value = DefaultRoute;
       }
 
       // grab stops for the selected routs
-      getStops(select_routes.value);
+      //getStops(select_routes.value);
 
       onRouteChanged();
 
@@ -327,7 +322,6 @@ function timeConverter(UNIX_timestamp){
 
     // var time = month + ' ' + date + ', ' + year + ' ' + hour + ':' + min;
     // return time;
-
 
     // convert to 12 hour AM/PM
 
